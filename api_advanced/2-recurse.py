@@ -7,7 +7,7 @@ import requests
 import sys
 
 
-def recurse(subreddit, hot_list=[], after=None):
+def recurse(subreddit,  hot_list=[], after=None):
     """get top all hot post"""
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     headers = {"User-Agent": "Mozilla/5.0"}
