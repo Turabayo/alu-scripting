@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" prints the titles of the first 10 hot posts listed"""
+"""get hot post function"""
 
 
 import json
@@ -8,16 +8,16 @@ import sys
 
 
 def top_ten(subreddit):
-    """Top ten hot post"""
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    headers = {
-        "User-Agent": "Linux:MyRedditApp:1.0 (by /u/Few-Area5580)"
-    }
-
-    response = requests.get(url, headers=headers, timeout=10)
-    if response.status_code == 200:
-        data = response.json()["data"]["children"]
-        for i in range(10):
-            return data[i]["data"]["title"]
+    """get top ten hot post"""
+    if len(sys.argv) < 2:
+        return print(None)
     else:
-        return "None"
+        url = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
+        headers = {"User-Agent": "Mozilla/5.0"}
+        result = requests.get(url, headers=headers, allow_redirects=False)
+        listing = []
+        if result.status_code != 200:
+            return print(None)
+        body = json.loads(result.text)
+        for i in body["data"]["children"]:
+            print(i["data"]["title"])
